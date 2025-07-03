@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account_id>.dkr.ecr.us-east-1.amazonaws.com
+  build:
+    commands:
+      - echo Building the Docker image...
+      - docker build -t hello-html-app .
+      - docker tag hello-html-app:latest <account_id>.dkr.ecr.us-east-1.amazonaws.com/hello-html-app:latest
+  post_build:
+    commands:
+      - echo Pushing the Docker image...
+      - docker push <account_id>.dkr.ecr.us-east-1.amazonaws.com/hello-html-app:latest
+      - echo Writing imagedefinitions.json...
+      - printf '[{"name":"hello-html-app","imageUri":"%s"}]' <account_id>.dkr.ecr.us-east-1.amazonaws.com/hello-html-app:latest > imagedefinitions.json
+
+artifacts:
+  files:
+    - imagedefinitions.json
