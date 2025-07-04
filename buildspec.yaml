@@ -4,18 +4,18 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account_id>.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 506651919838.dkr.ecr.us-east-1.amazonaws.com
   build:
     commands:
       - echo Building the Docker image...
-      - docker build -t hello-html-app .
-      - docker tag hello-html-app:latest <account_id>.dkr.ecr.us-east-1.amazonaws.com/hello-html-app:latest
+      - docker build -t hello-word-app .
+      - docker tag hello-word-app:latest 506651919838.dkr.ecr.us-east-1.amazonaws.com/hello-word-app:latest
   post_build:
     commands:
       - echo Pushing the Docker image...
-      - docker push <account_id>.dkr.ecr.us-east-1.amazonaws.com/hello-html-app:latest
+      - docker push 506651919838.dkr.ecr.us-east-1.amazonaws.com/hello-word-app:latest
       - echo Writing imagedefinitions.json...
-      - printf '[{"name":"hello-html-app","imageUri":"%s"}]' <account_id>.dkr.ecr.us-east-1.amazonaws.com/hello-html-app:latest > imagedefinitions.json
+      - printf '[{"name":"navya-dev-test","imageUri":"%s"}]' 506651919838.dkr.ecr.us-east-1.amazonaws.com/word-app:latest > imagedefinitions.json
 
 artifacts:
   files:
