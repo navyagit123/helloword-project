@@ -15,6 +15,15 @@ phases:
       - echo Pushing the Docker image...
       - docker push 506651919838.dkr.ecr.us-east-1.amazonaws.com/hello-word-app:latest
       - echo Writing imagedefinitions.json...
+      - |
+        cat > imagedefinitions.json <<EOF
+        [
+          {
+            "name": "hello-word-app",
+            "imageUri": "506651919838.dkr.ecr.us-east-1.amazonaws.com/hello-word-app:latest"
+          }
+        ]
+        EOF
       - ls -la
       - cat imagedefinitions.json
       #- printf '[{"name":"navya-dev-test","imageUri":"%s"}]' 506651919838.dkr.ecr.us-east-1.amazonaws.com/word-app:latest > imagedefinitions.json
